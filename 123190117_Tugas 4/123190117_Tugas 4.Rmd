@@ -1,0 +1,92 @@
+---
+title: "Tugas 4"
+author: "Dewi Zunuvi Setiawati"
+date: "10/6/2021"
+output: pdf_document
+---
+
+```{r}
+library(dslabs)
+data("murders") 
+```
+
+
+1) Menggunakan operator aksesor ($) untuk mengakses variabel populasi dan menyimpannya pada objek baru “pop”. Kemudian menggunakan fungsi sort untuk mengurutkan variabel “pop”. Pada langkah terakhir, gunakan operator ([) untuk menampilkan nilai populasi terkecil.
+```{r}
+x <- murders$population
+sort(x)
+```
+```{r}
+y <- sort(x)
+y[1]
+```
+
+
+2) Indeks dari data yang memiliki nilai populasi terkecil.
+```{r}
+i <- order(x)
+i[1]
+```
+
+
+3) Dengan fungsi which.min menampilkan seperti di atas
+```{r}
+which.min (murders$population)
+
+```
+
+
+4) Nama negara yang memiliki populasi terkecil.
+```{r}
+i_min <- which.min (murders$population)
+murders$state[i_min]
+```
+
+
+5) Menggunakan fungsi rank untuk menentukan peringkat populasi dari tiap negara bagian, dimulai dari nilai terkecil hingga terbesar. Simpan hasil pemeringkatan di objek baru “ranks”, lalu buat data frame baru yang berisi nama negara bagian dan peringkatnya dengan nama “my_df”
+```{r}
+pop <- c(35, 88, 42, 84, 81, 30)
+state <- c("Arizona", "California", "Florida", "Hawaii", "Kentucky", "Maryland")
+state_pop <- data.frame(state = state, population = pop)
+x <- rank(state_pop$population)
+x
+```
+
+```{r}
+my_df <- data.frame(state = state, rank = x)
+my_df
+
+```
+
+
+6) Mengurutkan my_df dengan fungsi order agar data yang ditampilkan merupakan data yang telah diurutkan dari populasi yang paling tidak padat hingga ke yang terpadat. 
+```{r}
+ord <- order(state_pop$population)
+my_df <- data.frame(state = state_pop$state[ord], state_pop$population[ord])
+my_df
+```
+
+
+7) Plot yang memvisualisasikan total pembunuhan terhadap populasi dan mengidentifikasi hubungan antara keduanya.
+```{r}
+population_in_millions <- murders$population/10^6
+total_gun_murders <- murders$total
+population <- log10(population_in_millions)
+plot(population, total_gun_murders) 
+
+```
+
+
+8) Histogram dari populasi negara bagian.
+```{r}
+hist(murders$population)
+```
+
+
+9) Boxplot dari populasi negara bagian berdasarkan wilayahnya.
+```{r}
+murders$rate <- with(murders, total/population*100000)
+boxplot(rate~region, data = murders)
+
+```
+
