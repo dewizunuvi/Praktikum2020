@@ -1,0 +1,49 @@
+---
+title: "Latihan6_123190117"
+author: "Dewi Zunuvi Setiawati"
+date: "11/8/2021"
+output: pdf_document
+---
+1. Menggunakan as_tibble untuk mengkonversi tabel dataset “US murders” dalam bentuk tibble dan simpan dalam objek baru bernama ‘murders_tibble’.
+```{r}
+library(dslabs)
+library(tidyverse)
+data(murders)
+as_tibble(murders) %>% class()
+murders_tibble <- as_tibble(murders) %>% class()
+```
+
+2. Menggunakan fungsi group_by untuk mengkonversi dataset “US murders” menjadi sebuah tibble yang dikelompokkan berdasarkan ‘region’.
+```{r}
+as_tibble(murders) %>% group_by(region)
+```
+
+3. Menggunakan operator pipe sehingga setiap fungsi dapat dipanggil tanpa menambahkanargumen.
+Menggunakan dot operator untuk mengakses populasi.
+```{r}
+exp(mean(log(murders$population)))
+```
+
+```{r}
+murders %>%
+  pull(population) %>%
+  log %>%
+  mean %>%
+  exp
+```
+
+4. Menggunakan map_df untuk membuat data frame yang terdiri dari tiga kolom: ‘n’, ‘s_n’, dan ‘s_n_2’. Kolom pertama harus berisi angka 1 hingga 100. Kolom kedua dan ketiga masing-masing harus berisi penjumlahan 1 hingga n, dimana n menyatakan jumlah baris.
+```{r}
+library(purrr)
+n= 1:100
+
+compute_s_n <- function(n){
+ x <- 1:n
+ tibble(s_n = sum(x))
+}
+
+df<- tibble(n)
+df
+```
+
+
